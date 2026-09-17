@@ -11,7 +11,7 @@ export default defineEventHandler(async event => {
   const keys = new Set<string>()
   for (const variant of body.variants) {
     const key = `${variant.color}:${variant.size}`
-    if (!variant.color?.trim() || !Number.isInteger(variant.size) || variant.size < 1 || !Number.isInteger(variant.stock) || variant.stock < 0 || keys.has(key)) throw createError({ statusCode: 400, statusMessage: 'Revisa las variantes y existencias' })
+    if (!variant.color?.trim() || !Number.isFinite(variant.size) || variant.size < 1 || !Number.isInteger(variant.size * 2) || !Number.isInteger(variant.stock) || variant.stock < 0 || keys.has(key)) throw createError({ statusCode: 400, statusMessage: 'Las tallas deben avanzar de medio número (por ejemplo, 26 o 26.5) y las existencias deben ser enteras' })
     keys.add(key)
   }
   const product: Product = { id, name: body.name.trim(), category: body.category.trim(), price: body.price, salePrice, description: body.description?.trim() ?? '', image: images[0]!, images, tone: body.tone || 'sand', badge: body.badge?.trim() || undefined, requestOnly: Boolean(body.requestOnly), variants: body.variants, colors: [...new Set(body.variants.map(variant => variant.color))] }

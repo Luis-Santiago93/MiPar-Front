@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
     const saved = sessionStorage.getItem('mipar_cart')
     if (saved) {
       const parsed: unknown = JSON.parse(saved)
-      if (Array.isArray(parsed)) cart.value = parsed.filter(item => item && typeof item.productId === 'string' && typeof item.color === 'string' && Number.isInteger(item.size) && Number.isInteger(item.quantity) && item.quantity > 0)
+      if (Array.isArray(parsed)) cart.value = parsed.filter(item => item && typeof item.productId === 'string' && typeof item.color === 'string' && Number.isFinite(item.size) && Number.isInteger(item.size * 2) && item.size >= 1 && Number.isInteger(item.quantity) && item.quantity > 0)
     }
   } catch { sessionStorage.removeItem('mipar_cart') }
   watch(cart, value => sessionStorage.setItem('mipar_cart', JSON.stringify(value)), { deep: true })
