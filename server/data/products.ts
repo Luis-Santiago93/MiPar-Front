@@ -1,0 +1,10 @@
+import type { Product } from '../../app/types/shop'
+
+const sizes = (color: string, values: [number, number][]) => values.map(([size, stock]) => ({ color, size, stock }))
+export const products: Product[] = [
+  { id: 'urbano-uno', name: 'Urbano Uno', category: 'Tenis casuales', price: 499, description: 'Un par cómodo para todos los días, de perfil limpio y fácil de combinar.', colors: ['Marfil', 'Negro'], variants: [...sizes('Marfil', [[24, 2], [25, 3], [26, 1], [27, 2], [28, 0]]), ...sizes('Negro', [[24, 1], [25, 0], [26, 3], [27, 1], [28, 2]])], image: '/images/urbano-uno.png', images: ['/images/urbano-uno.png'], tone: 'sand', badge: 'Favorito' },
+  { id: 'paso-ligero', name: 'Paso Ligero', category: 'Tenis casuales', price: 549, description: 'Ligero y versátil, pensado para acompañarte desde temprano hasta la noche.', colors: ['Blanco', 'Azul'], variants: [...sizes('Blanco', [[23, 1], [24, 2], [25, 2], [26, 0], [27, 1]]), ...sizes('Azul', [[23, 0], [24, 1], [25, 2], [26, 3], [27, 1]])], image: '/images/urbano-uno.png', images: ['/images/urbano-uno.png'], tone: 'blue' },
+  { id: 'clasico-diario', name: 'Clásico Diario', category: 'Calzado casual', price: 459, description: 'Silueta sencilla y cómoda para tus planes de cada día.', colors: ['Negro', 'Marfil'], variants: [...sizes('Negro', [[24, 1], [25, 2], [26, 2], [27, 0], [28, 1]]), ...sizes('Marfil', [[24, 0], [25, 1], [26, 2], [27, 2], [28, 1]])], image: '/images/urbano-uno.png', images: ['/images/urbano-uno.png'], tone: 'rose' },
+  { id: 'ruta-nueva', name: 'Ruta Nueva', category: 'Tenis casuales', price: 589, description: 'Un diseño fresco para salir con comodidad y estilo.', colors: ['Blanco', 'Negro'], variants: [...sizes('Blanco', [[24, 0], [25, 0], [26, 0], [27, 0], [28, 0]]), ...sizes('Negro', [[24, 0], [25, 0], [26, 0], [27, 0], [28, 0]])], image: '/images/urbano-uno.png', images: ['/images/urbano-uno.png'], tone: 'lilac', badge: 'Solo solicitud', requestOnly: true }
+]
+export const getProduct = (id: string) => products.find(product => product.id === id)

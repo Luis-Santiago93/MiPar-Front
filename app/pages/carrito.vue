@@ -1,0 +1,11 @@
+<template>
+  <main class="shell cart-page"><NuxtLink to="/" class="back-link">← Seguir explorando</NuxtLink><div class="section-heading"><div><span class="eyebrow">TU SELECCIÓN</span><h1>Mi bolsa</h1></div><span class="results">{{ cartCount }} {{ cartCount === 1 ? 'par' : 'pares' }}</span></div><div v-if="!cart.length" class="empty-state"><h2>Tu bolsa está vacía</h2><p>Encuentra un modelo y elige color y talla para empezar.</p><NuxtLink to="/" class="button button-dark">Explorar catálogo</NuxtLink></div><div v-else class="cart-layout"><div class="cart-items"><article v-for="item in cart" :key="`${item.productId}-${item.color}-${item.size}`" class="cart-item"><div :class="['cart-item-image', getProduct(item.productId)?.tone]"><img :src="getProduct(item.productId)?.image" :alt="getProduct(item.productId)?.name" /></div><div class="cart-item-details"><h2>{{ getProduct(item.productId)?.name }}</h2><p>{{ item.color }} · Talla {{ item.size }}</p><strong>{{ money((getProduct(item.productId)?.salePrice ?? getProduct(item.productId)?.price ?? 0) * item.quantity) }}</strong><div class="quantity-row"><button type="button" :aria-label="`Quitar una unidad de ${getProduct(item.productId)?.name}`" @click="setQuantity(item, item.quantity - 1)">−</button><span>{{ item.quantity }}</span><button type="button" :aria-label="`Agregar una unidad de ${getProduct(item.productId)?.name}`" @click="setQuantity(item, item.quantity + 1)">+</button><button class="remove" type="button" @click="removeItem(item)">Eliminar</button></div></div></article></div><aside class="order-summary"><h2>Resumen</h2><div class="summary-line"><span>Subtotal</span><strong>{{ money(subtotal) }}</strong></div><p>El costo de entrega se calcula en el siguiente paso.</p><NuxtLink to="/entrega" class="button button-dark">Elegir entrega <span aria-hidden="true">→</span></NuxtLink><small>Al confirmar se genera un folio y se actualiza el inventario.</small></aside></div></main>
+</template>
+<script setup lang="ts">
+import type { Product } from '~/types/shop'
+import { money } from '~/utils/money'
+const { data } = await useFetch<Product[]>('/api/products')
+const { cart, cartCount, subtotal, getProduct, setProducts, removeItem, setQuantity } = useShop()
+watchEffect(() => { if (data.value) setProducts(data.value) })
+useHead({ title: 'Mi bolsa | MiPar' })
+</script>
