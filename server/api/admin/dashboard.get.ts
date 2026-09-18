@@ -23,5 +23,5 @@ export default defineEventHandler(event => {
     }
   }
   const soldTotal = sold.reduce((sum, order) => sum + order.total, 0)
-  return { soldCount: sold.length, soldTotal, soldPairs, averageTicket: sold.length ? soldTotal / sold.length : 0, pendingCount: store.orders.filter(order => order.status !== 'vendido').length, availablePairs: store.products.reduce((sum, product) => sum + product.variants.reduce((n, variant) => n + variant.stock, 0), 0), salesByDay: [...byDay.values()].sort((a, b) => a.date.localeCompare(b.date)), payments: [...payments.values()].sort((a, b) => b.total - a.total), topProducts: [...products.values()].sort((a, b) => b.pairs - a.pairs).slice(0, 5) }
+  return { soldCount: sold.length, soldTotal, soldPairs, averageTicket: sold.length ? soldTotal / sold.length : 0, pendingCount: store.orders.filter(order => !['vendido', 'cancelado'].includes(order.status)).length, availablePairs: store.products.reduce((sum, product) => sum + product.variants.reduce((n, variant) => n + variant.stock, 0), 0), salesByDay: [...byDay.values()].sort((a, b) => a.date.localeCompare(b.date)), payments: [...payments.values()].sort((a, b) => b.total - a.total), topProducts: [...products.values()].sort((a, b) => b.pairs - a.pairs).slice(0, 5) }
 })

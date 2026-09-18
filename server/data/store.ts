@@ -2,11 +2,11 @@ import type { CartItem, Product } from '../../app/types/shop'
 import { products as seedProducts } from './products'
 import { zones as seedZones, nextDates, type DeliveryZone } from './delivery'
 
-export type OrderStatus = 'nuevo' | 'confirmado' | 'vendido'
+export type OrderStatus = 'nuevo' | 'confirmado' | 'vendido' | 'cancelado'
 export type PaymentMethod = 'efectivo' | 'transferencia' | 'tarjeta'
 export type OrderLine = { productId: string; name: string; color: string; size: number; quantity: number; unitPrice: number; lineTotal: number }
 export type Order = { id: string; createdAt: string; soldAt?: string; customer: { name: string; phone: string; address: string; notes: string; location?: { lat: number; lon: number } }; items: CartItem[]; lines: OrderLine[]; zoneId: string; zoneName: string; deliveryDate: string; deliveryTime: string; paymentMethod: PaymentMethod; subtotal: number; deliveryFee: number; total: number; status: OrderStatus }
-export type ProductRequest = { id: string; createdAt: string; productId: string; productName: string; color: string; size: number; customer: { name: string; phone: string; notes: string }; status: 'nueva' | 'contactada' | 'cerrada' }
+export type ProductRequest = { id: string; createdAt: string; productId: string; productName: string; color: string; size: number; customer: { name: string; phone: string; notes: string }; status: 'nueva' | 'contactada' | 'cerrada' | 'cancelada' }
 export const store: { products: Product[]; zones: DeliveryZone[]; orders: Order[]; productRequests: ProductRequest[] } = {
   products: structuredClone(seedProducts), zones: structuredClone(seedZones), orders: [], productRequests: []
 }
